@@ -6,8 +6,9 @@ from dotenv import load_dotenv
 
 load_dotenv()
 
-# Fallback to SQLite if .env missing
-DATABASE_URL = os.getenv("DATABASE_URL", "sqlite:///./test.db")
+
+DATABASE_URL = os.getenv("DATABASE_URL", "sqlite:///./app.db")
+
 
 # Handle SQLite engine connection args
 if DATABASE_URL.startswith("sqlite"):

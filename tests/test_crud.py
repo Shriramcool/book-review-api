@@ -1,10 +1,10 @@
 import pytest
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
-from app import models, crud
+from app import models, crud, schemas
 from app.database import Base
 
-# Use in-memory SQLite for fast, isolated tests
+# Use in-memory SQLite for isolated tests
 SQLALCHEMY_DATABASE_URL = "sqlite:///:memory:"
 engine = create_engine(SQLALCHEMY_DATABASE_URL, connect_args={"check_same_thread": False})
 TestingSessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
@@ -20,7 +20,7 @@ def db():
         Base.metadata.drop_all(bind=engine)
 
 def test_create_book_and_get_books(db):
-    book_data = {"title": "Unit Test Book", "author": "Unit Tester"}
+    book_data = schemas.BookCreate(title="Unit Test Book", author="Unit Tester")
     book = crud.create_book(db, book_data)
     assert book.title == "Unit Test Book"
 
@@ -29,10 +29,10 @@ def test_create_book_and_get_books(db):
     assert books[0].author == "Unit Tester"
 
 def test_create_and_get_reviews(db):
-    book_data = {"title": "Review Book", "author": "Reviewer"}
+    book_data = schemas.BookCreate(title="Review Book", author="Reviewer")
     book = crud.create_book(db, book_data)
 
-    review_data = {"rating": 4, "comment": "Great!"}
+    review_data = schemas.ReviewCreate(rating=4, comment="Great!", reviewer="Alice")
     review = crud.create_review(db, book.id, review_data)
     assert review.comment == "Great!"
 

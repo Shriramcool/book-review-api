@@ -16,8 +16,9 @@ class Review(Base):
     __tablename__ = "reviews"
 
     id = Column(Integer, primary_key=True, index=True)
-    content = Column(String)
-    rating = Column(Integer)
+    reviewer = Column(String, nullable=False)  
+    comment = Column(String, nullable=False)   
+    rating = Column(Integer, nullable=False)
     book_id = Column(Integer, ForeignKey("books.id", ondelete="CASCADE"), index=True)
 
     book = relationship("Book", back_populates="reviews")

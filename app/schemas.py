@@ -1,5 +1,6 @@
 from pydantic import BaseModel
 
+
 class BookBase(BaseModel):
     title: str
     author: str
@@ -15,7 +16,8 @@ class Book(BookBase):
 
 
 class ReviewBase(BaseModel):
-    content: str
+    reviewer: str         
+    comment: str           
     rating: int
 
 class ReviewCreate(ReviewBase):

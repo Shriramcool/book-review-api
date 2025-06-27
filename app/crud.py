@@ -1,7 +1,6 @@
 from . import models, schemas
 from sqlalchemy.orm import Session
 
-# Book
 def get_books(db: Session):
     return db.query(models.Book).all()
 
@@ -12,7 +11,7 @@ def create_book(db: Session, book: schemas.BookCreate):
     db.refresh(db_book)
     return db_book
 
-# Review
+
 def get_reviews_for_book(db: Session, book_id: int):
     return db.query(models.Review).filter(models.Review.book_id == book_id).all()
 
